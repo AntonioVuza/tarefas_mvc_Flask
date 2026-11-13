@@ -58,7 +58,7 @@ class Database:
             if self.cursor.description:
                 return self.cursor.fetchall()
 
-            self.cursor.commit()
+            self.connection.commit()
             return self.cursor.rowcount
 
         except Error as e:
@@ -73,6 +73,12 @@ class Database:
     # Método de saída de contexto (para uso com `with`)
     def __exit__(self, exc_type, exc_val, exc_tb):
         self.desconectar()
+
+"""
+Definição do caminho absoluto até o arquivo do script SQL que será
+executado para criar o banco de dados na primeira vez que a aplicação
+foi utilizada. Esse caminho não depende do sistema operacional.
+"""
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 SQL_PATH =BASE_DIR / "data" / "tarefas.sql"    
